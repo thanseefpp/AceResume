@@ -42,7 +42,7 @@ def create_gradio_interface():
         with gr.Tab("ATS Score Analyzer"):
             with gr.Row():
                 ats_resume_file = gr.File(label="Upload your resume (PDF)")
-                ats_job_description = gr.Textbox(label="Enter the job description", lines=5)
+                ats_job_description = gr.Textbox(label="Enter the job description (optional)", lines=5)
             analyze_button = gr.Button("Analyze ATS Score")
             ats_analysis = gr.Textbox(label="ATS Analysis", lines=10)
             ats_cost = gr.Textbox(label="Cost Information", lines=3)
