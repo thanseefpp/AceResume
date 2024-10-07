@@ -1,14 +1,28 @@
 import tiktoken
-from app.utils.config import get_model_details
+from app.config.settings import get_model_details
 
 class CostCalculator:
     def __init__(self):
-        self.model_name = get_model_details()[0]['model']
-        self.encoding = tiktoken.encoding_for_model(self.model_name)
-        self.input_cost_per_1k_tokens = get_model_details()[0]['input_token_price']
-        self.output_cost_per_1k_tokens = get_model_details()[0]['output_token_price']
+        self.model_details = get_model_details()
+        self.set_model(self.model_details[0]['llm_platform'], self.model_details[0]['details'][0]['model'])
         self.total_tokens = 0
         self.total_cost = 0
+
+    def set_model(self, platform, model_name):
+        self.platform = platform
+        self.model_name = model_name
+        for p in self.model_details:
+            if p['llm_platform'] == platform:
+                for model in p['details']:
+                    if model['model'] == model_name:
+                        self.input_cost_per_1k_tokens = model['input_token_price']
+                        self.output_cost_per_1k_tokens = model['output_token_price']
+                        break
+                break
+        try:
+            self.encoding = tiktoken.encoding_for_model(self.model_name)
+        except KeyError:
+            self.encoding = tiktoken.get_encoding("cl100k_base") # Use a default encoding if the model is not recognized
 
     def calculate_tokens(self, text):
         return len(self.encoding.encode(text))
