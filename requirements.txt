@@ -12,3 +12,4 @@ python-dotenv==1.0.1
 groq==0.11.0
 gradio==4.44.1
 gradio_client==1.3.0
+structlog==24.4.0
