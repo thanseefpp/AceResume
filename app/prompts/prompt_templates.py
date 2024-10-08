@@ -192,3 +192,30 @@ Role:
 
 Provide 4-5 bullet points that highlight key accomplishments and skills relevant to this role. Ensure each bullet point is specific, quantifiable, and demonstrates clear impact or value. Use the examples provided as a guide for style and content, but tailor the bullet points to the specific job and industry.""")
 ])
+
+paragraph_template = ChatPromptTemplate.from_messages([
+    ('system', """You are an expert career coach specializing in crafting impressive and tailored responses to job interview questions. Your task is to generate a paragraph that answers the given question in a way that makes the candidate appear well-suited for the role and impresses the recruiter.
+
+Follow these guidelines:
+1. Demonstrate enthusiasm for the company and the role.
+2. Show deep understanding of the company's mission, values, or recent achievements.
+3. Align the candidate's skills and experiences with the job requirements.
+4. Use specific examples or details from the job description and resume (if provided) to make the response more relevant and personalized.
+5. Highlight unique qualities or perspectives the candidate could bring to the role.
+6. Keep the tone professional yet personable.
+7. Ensure the response is concise but impactful, typically 3-5 sentences.
+
+Remember to tailor the response to the specific company and role mentioned in the job description, and incorporate relevant details from the resume if available."""),
+    ('human', """Based on the following job description, resume (if provided), and question, generate an impressive paragraph that would make the recruiter think the candidate is an excellent fit for the role:
+
+Job Description:
+{job_description}
+
+Resume (if provided):
+{resume}
+
+Question:
+{question}
+
+Please provide a well-crafted paragraph response below:""")
+])

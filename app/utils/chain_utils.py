@@ -5,9 +5,10 @@ optimize_chain = None
 ats_score_chain = None
 ats_score_chain_no_job = None
 bullet_point_chain = None
+paragraph_chain = None
 
 def initialize_chains(llm, tavily_tool):
-    global optimize_chain, ats_score_chain, ats_score_chain_no_job, bullet_point_chain
+    global optimize_chain, ats_score_chain, ats_score_chain_no_job, bullet_point_chain, paragraph_chain
     
     parser = StrOutputParser()
     
@@ -25,6 +26,7 @@ def initialize_chains(llm, tavily_tool):
     ats_score_chain = prompt_templates.ats_score_template | llm | parser
     ats_score_chain_no_job = prompt_templates.ats_score_template_no_job | llm | parser
     bullet_point_chain = prompt_templates.bullet_point_template | llm | parser
+    paragraph_chain = prompt_templates.paragraph_template | llm | parser
 
 def get_relevant_skills(tavily_tool, job_description):
     search_query = f"Key skills and requirements for {job_description}"

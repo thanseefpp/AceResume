@@ -6,7 +6,7 @@ from langchain_groq import ChatGroq
 from langchain_community.tools.tavily_search import TavilySearchResults
 
 from app.utils import chain_utils
-from app.components import resume_optimizer, ats_analyzer, bullet_point_generator
+from app.components import resume_optimizer, ats_analyzer, bullet_point_generator, paragraph_generator
 from app.utils.cost_calculator import cost_calculator
 from app.config.settings import get_model_details
 
@@ -78,6 +78,15 @@ def create_gradio_interface():
             bullet_points = gr.Textbox(label="Generated Bullet Points", lines=10)
             bullet_cost = gr.Textbox(label="Cost Information", lines=3)
         
+        with gr.Tab("Generate Paragraph"):
+            with gr.Row():
+                paragraph_job_description = gr.Textbox(label="Enter the job description", lines=5)
+                paragraph_resume_file = gr.File(label="Upload your resume (PDF)")
+            question = gr.Textbox(label="Enter the question", value="What interests you about working for this company?")
+            generate_paragraph_button = gr.Button("Generate Paragraph")
+            generated_paragraph = gr.Textbox(label="Generated Paragraph", lines=10)
+            paragraph_cost = gr.Textbox(label="Cost Information", lines=3)
+        
         total_usage = gr.Textbox(label="Total Usage", lines=2)
         
         def update_chains(platform, model_name):
@@ -99,11 +108,14 @@ def create_gradio_interface():
         generate_button.click(bullet_point_generator.generate_bullet_points, 
                               inputs=[bullet_job_description, role], 
                               outputs=[bullet_points, bullet_cost])
+        generate_paragraph_button.click(paragraph_generator.generate_paragraph,
+                                        inputs=[paragraph_job_description, paragraph_resume_file, question],
+                                        outputs=[generated_paragraph, paragraph_cost])
         
-        for button in [optimize_button, analyze_button, generate_button]:
+        for button in [optimize_button, analyze_button, generate_button, generate_paragraph_button]:
             button.click(lambda: f"Total Tokens: {cost_calculator.get_total_usage()['total_tokens']}, Total Cost: ${cost_calculator.get_total_usage()['total_cost']:.4f}", 
-                         inputs=None, 
-                         outputs=total_usage)
+                        inputs=None, 
+                        outputs=total_usage)
 
     return iface
 

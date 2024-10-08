@@ -1,6 +1,6 @@
-# AceResumer
+# AceResume
 
-AceResumer is a powerful tool that leverages various language models to help job seekers optimize their resumes, analyze ATS compatibility, and generate impactful bullet points for job applications.
+AceResume is a powerful tool that leverages various language models to help job seekers optimize their resumes, analyze ATS compatibility, and generate impactful bullet points for job applications.
 
 ## Table of Contents
 1. [Features](#features)
@@ -21,8 +21,8 @@ AceResumer is a powerful tool that leverages various language models to help job
 
 1. Clone the repository:
    ```
-   git clone https://github.com/thanseefpp/AceResumer.git
-   cd aceresumer
+   git clone https://github.com/thanseefpp/AceResume.git
+   cd AceResume
    ```
 
 2. Create a virtual environment with Conda or VirtualEnv:
